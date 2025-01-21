@@ -2,6 +2,7 @@ import {ReactNode} from "react";
 import type {Metadata} from "next";
 import {Open_Sans} from "next/font/google";
 import "./globals.css";
+import Navbar from "@/app/Navbar";
 
 const openSans = Open_Sans({
     subsets: ["latin"],
@@ -17,7 +18,8 @@ export default function RootLayout({children}: Readonly<{ children: ReactNode; }
     return (
         <html lang="en">
         <body className={openSans.className}>
-        {children}
+        <Navbar/>
+        <main>{children}</main>
         </body>
         </html>
     );
