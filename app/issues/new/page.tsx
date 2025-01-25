@@ -1,15 +1,15 @@
 "use client";
 
-import {Button, TextField} from '@radix-ui/themes';
+import { Button, TextField } from '@radix-ui/themes';
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import SimpleMDE from "react-simplemde-editor";
-import "easymde/dist/easymde.min.css";
-import {Controller, useForm} from "react-hook-form";
 import axios from "axios";
-import {toast} from "react-toastify";
-import {useRouter} from "next/navigation";
-import {zodResolver} from "@hookform/resolvers/zod";
-import createIssueSchema from "@/app/api/issues/schema";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+import {createIssueSchema} from "@/app/validationSchema";
 import ErrorMessage from "@/app/components/ErrorMessage";
+import "easymde/dist/easymde.min.css";
 
 interface IssueForm {
     title: string;

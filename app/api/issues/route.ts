@@ -1,5 +1,5 @@
 import {NextRequest, NextResponse} from "next/server";
-import createIssueSchema from "@/app/api/issues/schema";
+import {createIssueSchema} from "@/app/validationSchema";
 import {prisma} from "@/prisma/client";
 
 export const GET = async () => {
