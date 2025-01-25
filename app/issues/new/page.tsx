@@ -11,11 +11,12 @@ import {createIssueSchema} from "@/app/validationSchema";
 import ErrorMessage from "@/app/components/ErrorMessage";
 import "easymde/dist/easymde.min.css";
 import {z} from "zod";
+import Spinner from "@/app/components/Spinner";
 
 type IssueForm = z.infer<typeof createIssueSchema>;
 
 const CreateIssuePage = () => {
-    const {register, control, handleSubmit, formState: {errors}} = useForm<IssueForm>({
+    const {register, control, handleSubmit, formState: {errors, isSubmitting}} = useForm<IssueForm>({
         resolver: zodResolver(createIssueSchema),
     });
     const router = useRouter()
@@ -32,6 +33,7 @@ const CreateIssuePage = () => {
             });
     }
 
+    if (isSubmitting) return <Spinner/>
     return (
         <div className='max-w-screen-lg mx-auto px-10'>
             <form onSubmit={handleSubmit((data) => onSubmit(data))}>
