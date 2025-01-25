@@ -1,11 +1,9 @@
-import IssuesPage from "@/app/issues/page";
-
-const Page = () => {
+const HomePage = () => {
     return (
         <div>
-          <IssuesPage/>
+            Home Page
         </div>
     );
 };
 
-export default Page;
+export default HomePage;
