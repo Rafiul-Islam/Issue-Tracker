@@ -11,7 +11,7 @@ import {createIssueSchema} from "@/app/validationSchema";
 import ErrorMessage from "@/app/components/ErrorMessage";
 import "easymde/dist/easymde.min.css";
 import {z} from "zod";
-import Spinner from "@/app/components/Spinner";
+import Loader from "@/app/components/Spinner";
 
 type IssueForm = z.infer<typeof createIssueSchema>;
 
