@@ -1,7 +1,9 @@
+import IssuesPage from "@/app/issues/page";
+
 const Page = () => {
     return (
         <div>
-          Hello World
+          <IssuesPage/>
         </div>
     );
 };
