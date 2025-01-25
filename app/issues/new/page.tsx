@@ -7,6 +7,9 @@ import {Controller, useForm} from "react-hook-form";
 import axios from "axios";
 import {toast} from "react-toastify";
 import {useRouter} from "next/navigation";
+import {zodResolver} from "@hookform/resolvers/zod";
+import createIssueSchema from "@/app/api/issues/schema";
+import ErrorMessage from "@/app/components/ErrorMessage";
 
 interface IssueForm {
     title: string;
@@ -14,7 +17,9 @@ interface IssueForm {
 }
 
 const CreateIssuePage = () => {
-    const {register, control, handleSubmit} = useForm<IssueForm>();
+    const {register, control, handleSubmit, formState: {errors}} = useForm<IssueForm>({
+        resolver: zodResolver(createIssueSchema),
+    });
     const router = useRouter()
 
     const onSubmit = async (data: IssueForm) => {
@@ -34,6 +39,7 @@ const CreateIssuePage = () => {
             <form onSubmit={handleSubmit((data) => onSubmit(data))}>
                 <div className='mb-5'>
                     <TextField.Root variant="surface" placeholder="Title" {...register('title')} />
+                    <ErrorMessage error={errors['title']} />
                 </div>
                 <div className='mb-5'>
                     <Controller
@@ -41,6 +47,7 @@ const CreateIssuePage = () => {
                         control={control}
                         render={({field}) => <SimpleMDE {...field} />}
                     />
+                    <ErrorMessage error={errors['description']} />
                 </div>
                 <Button role='button'>Submit New Issue</Button>
             </form>
