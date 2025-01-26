@@ -12,7 +12,7 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {ErrorMessage, Spinner} from "@/app/components";
 import {IssueSchema} from "@/app/validationSchema";
 import "easymde/dist/easymde.min.css";
-import { Issue } from "@prisma/client";
+import {Issue} from "@prisma/client";
 
 const SimpleMDE = dynamic(
     () => import("react-simplemde-editor"),
@@ -21,7 +21,7 @@ const SimpleMDE = dynamic(
 
 type IssueFormData = z.infer<typeof IssueSchema>;
 
-const IssueForm = ({issue} : {issue?: Issue}) => {
+const IssueForm = ({issue}: { issue?: Issue }) => {
     const {register, control, handleSubmit, formState: {errors, isSubmitting}} = useForm<IssueFormData>({
         resolver: zodResolver(IssueSchema),
         defaultValues: {
@@ -32,15 +32,27 @@ const IssueForm = ({issue} : {issue?: Issue}) => {
     const router = useRouter();
 
     const onSubmit = async (data: IssueFormData) => {
-        await axios.post('/api/issues', data)
-            .then(({data}) => {
-                toast.success(data.message);
-                router.push('/issues');
-            })
-            .catch((err) => {
-                console.log("Error:", err);
-                toast.error(err.response.data.message);
-            });
+        if (issue) {
+            await axios.patch(`/api/issues/${issue.id}`, data)
+                .then(({data}) => {
+                    toast.success(data.message);
+                    router.push('/issues');
+                })
+                .catch((err) => {
+                    console.log("Error:", err);
+                    toast.error(err.response.data.message);
+                });
+        } else {
+            await axios.post('/api/issues', data)
+                .then(({data}) => {
+                    toast.success(data.message);
+                    router.push('/issues');
+                })
+                .catch((err) => {
+                    console.log("Error:", err);
+                    toast.error(err.response.data.message);
+                });
+        }
     }
 
     if (isSubmitting) return <Spinner/>
@@ -59,7 +71,9 @@ const IssueForm = ({issue} : {issue?: Issue}) => {
                     />
                     <ErrorMessage error={errors['description']}/>
                 </div>
-                <Button role='button'>Submit New Issue</Button>
+                <Button role='button'>
+                    {issue ? 'Update Issue' : 'Submit New Issue'}
+                </Button>
             </form>
         </div>
     );
