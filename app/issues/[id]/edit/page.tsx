@@ -1,10 +1,18 @@
 import {prisma} from "@/prisma/client";
 import {notFound} from "next/navigation";
-import IssueForm from "@/app/issues/_components/IssueForm";
+import dynamic from "next/dynamic";
+import IssueFormSkeleton from "@/app/issues/_components/IssueFormSkeleton";
 
 interface Props {
-    params: Promise<{id: string}>
+    params: Promise<{ id: string }>
 }
+
+const IssueForm = dynamic(
+    () => import('@/app/issues/_components/IssueForm'),
+    {
+        loading: () => <IssueFormSkeleton/>
+    }
+)
 
 const EditIssuePage = async ({params}: Props) => {
     const {id} = await params;

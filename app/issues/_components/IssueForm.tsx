@@ -3,21 +3,15 @@
 import axios from "axios";
 import {toast} from "react-toastify";
 import {useRouter} from "next/navigation";
-import dynamic from "next/dynamic";
 import {z} from "zod";
 import {Button, TextField} from '@radix-ui/themes';
 import {Controller, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-
+import SimpleMDE from "react-simplemde-editor";
 import {ErrorMessage, Spinner} from "@/app/components";
 import {IssueSchema} from "@/app/validationSchema";
-import "easymde/dist/easymde.min.css";
 import {Issue} from "@prisma/client";
-
-const SimpleMDE = dynamic(
-    () => import("react-simplemde-editor"),
-    {ssr: false}
-)
+import "easymde/dist/easymde.min.css";
 
 type IssueFormData = z.infer<typeof IssueSchema>;
 
