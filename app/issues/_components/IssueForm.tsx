@@ -10,7 +10,7 @@ import {Controller, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 
 import {ErrorMessage, Spinner} from "@/app/components";
-import {createIssueSchema} from "@/app/validationSchema";
+import {IssueSchema} from "@/app/validationSchema";
 import "easymde/dist/easymde.min.css";
 import { Issue } from "@prisma/client";
 
@@ -19,11 +19,11 @@ const SimpleMDE = dynamic(
     {ssr: false}
 )
 
-type IssueFormData = z.infer<typeof createIssueSchema>;
+type IssueFormData = z.infer<typeof IssueSchema>;
 
 const IssueForm = ({issue} : {issue?: Issue}) => {
     const {register, control, handleSubmit, formState: {errors, isSubmitting}} = useForm<IssueFormData>({
-        resolver: zodResolver(createIssueSchema),
+        resolver: zodResolver(IssueSchema),
         defaultValues: {
             title: issue?.title,
             description: issue?.description
