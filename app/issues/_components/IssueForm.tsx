@@ -37,6 +37,7 @@ const IssueForm = ({issue}: { issue?: Issue }) => {
                 .then(({data}) => {
                     toast.success(data.message);
                     router.push('/issues');
+                    router.refresh();
                 })
                 .catch((err) => {
                     console.log("Error:", err);
@@ -47,6 +48,7 @@ const IssueForm = ({issue}: { issue?: Issue }) => {
                 .then(({data}) => {
                     toast.success(data.message);
                     router.push('/issues');
+                    router.refresh();
                 })
                 .catch((err) => {
                     console.log("Error:", err);
