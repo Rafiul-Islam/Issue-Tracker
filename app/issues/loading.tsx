@@ -15,7 +15,6 @@ const Loading = () => {
                     <Table.Header>
                         <Table.Row>
                             <Table.ColumnHeaderCell>Title</Table.ColumnHeaderCell>
-                            <Table.ColumnHeaderCell>Description</Table.ColumnHeaderCell>
                             <Table.ColumnHeaderCell>Status</Table.ColumnHeaderCell>
                             <Table.ColumnHeaderCell>Created At</Table.ColumnHeaderCell>
                         </Table.Row>
@@ -24,7 +23,6 @@ const Loading = () => {
                     <Table.Body>
                         {issues.map((issue) => (
                             <Table.Row key={issue}>
-                                <Table.Cell><Skeleton /></Table.Cell>
                                 <Table.Cell><Skeleton /></Table.Cell>
                                 <Table.Cell><Skeleton /></Table.Cell>
                                 <Table.Cell><Skeleton /></Table.Cell>
