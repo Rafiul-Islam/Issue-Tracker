@@ -30,7 +30,7 @@ const IssueForm = ({issue}: { issue?: Issue }) => {
             axios.patch(`/api/issues/${issue.id}`, data)
                 .then(({data}) => {
                     toast.success(data.message);
-                    router.push('/issues');
+                    router.push('/issues/list');
                     router.refresh();
                 })
                 .catch((err) => {
@@ -41,7 +41,7 @@ const IssueForm = ({issue}: { issue?: Issue }) => {
              axios.post('/api/issues', data)
                 .then(({data}) => {
                     toast.success(data.message);
-                    router.push('/issues');
+                    router.push('/issues/list');
                     router.refresh();
                 })
                 .catch((err) => {

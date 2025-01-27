@@ -18,7 +18,7 @@ const IssueDeleteButton = ({issueId}: { issueId: string }) => {
         axios.delete(`/api/issues/${issueId}`)
             .then(({data}) => {
                 toast.success(data.message);
-                router.push('/issues');
+                router.push('/issues/list');
                 router.refresh();
             })
             .catch((err) => {

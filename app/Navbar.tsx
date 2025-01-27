@@ -8,7 +8,7 @@ import classNames from "classnames";
 
 const links = [
     {label: 'Dashboard', url: '/'},
-    {label: 'Issues', url: '/issues'},
+    {label: 'Issues', url: '/issues/list'},
 ];
 
 const Navbar = () => {
