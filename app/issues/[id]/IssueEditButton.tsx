@@ -6,7 +6,7 @@ const IssueEditButton = ({issueId}: { issueId: string }) => {
     return (
         <>
             <Link href={`/issues/${issueId}/edit`}>
-                <Button role='button'>
+                <Button className='w-full' role='button'>
                     <Pencil2Icon/>
                     Edit
                 </Button>
