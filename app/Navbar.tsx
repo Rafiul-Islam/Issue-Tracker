@@ -57,8 +57,9 @@ const Navbar = () => {
                                                 role='button'
                                                 size="3"
                                                 src={data?.user?.image!}
-                                                fallback="A"
+                                                fallback="?"
                                                 radius='full'
+                                                referrerPolicy='no-referrer'
                                             />
                                         </DropdownMenu.Trigger>
                                         <DropdownMenu.Content variant="soft">
