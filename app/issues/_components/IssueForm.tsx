@@ -25,9 +25,9 @@ const IssueForm = ({issue}: { issue?: Issue }) => {
     });
     const router = useRouter();
 
-    const onSubmit = async (data: IssueFormData) => {
+    const onSubmit = (data: IssueFormData) => {
         if (issue) {
-            await axios.patch(`/api/issues/${issue.id}`, data)
+            axios.patch(`/api/issues/${issue.id}`, data)
                 .then(({data}) => {
                     toast.success(data.message);
                     router.push('/issues');
@@ -38,7 +38,7 @@ const IssueForm = ({issue}: { issue?: Issue }) => {
                     toast.error(err.response.data.message);
                 });
         } else {
-            await axios.post('/api/issues', data)
+             axios.post('/api/issues', data)
                 .then(({data}) => {
                     toast.success(data.message);
                     router.push('/issues');
