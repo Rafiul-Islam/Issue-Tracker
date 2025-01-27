@@ -7,6 +7,7 @@ import "@radix-ui/themes/styles.css";
 import "./theme-config.css"
 import "./globals.css";
 import {ToastContainer} from "react-toastify";
+import AuthProvider from "@/app/auth/Provider";
 
 const openSans = Open_Sans({
     subsets: ["latin"],
@@ -24,11 +25,13 @@ export default function RootLayout({children}: Readonly<{ children: ReactNode; }
     return (
         <html lang="en">
         <body className={openSans.variable}>
-        <ToastContainer theme='colored'/>
-        <Theme accentColor="purple">
-            <Navbar/>
-            <main className='p-5'>{children}</main>
-        </Theme>
+        <AuthProvider>
+            <ToastContainer theme='colored'/>
+            <Theme accentColor="purple">
+                <Navbar/>
+                <main className='p-5'>{children}</main>
+            </Theme>
+        </AuthProvider>
         </body>
         </html>
     );
