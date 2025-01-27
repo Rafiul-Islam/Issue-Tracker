@@ -6,6 +6,7 @@ import {usePathname} from "next/navigation";
 import classNames from "classnames";
 import {Avatar, Box, Container, DropdownMenu, Flex, Text} from "@radix-ui/themes";
 import {useSession} from "next-auth/react";
+import {Skeleton} from "@/app/components";
 
 const links = [
     {label: 'Dashboard', url: '/'},
@@ -54,7 +55,7 @@ const NavLinks = () => {
 const AuthStatus = () => {
     const {data, status} = useSession();
 
-    if (status === 'loading') return null;
+    if (status === 'loading') return <Skeleton width='4rem'/>;
     if (status === 'unauthenticated') return <Link className='nav-link' href='/api/auth/signin'>Login</Link>
     return (
         <DropdownMenu.Root>
@@ -63,7 +64,7 @@ const AuthStatus = () => {
                     className='border-gray-400 border-2'
                     role='button'
                     size="3"
-                    src={data?.user?.image!}
+                    src={data!.user!.image!}
                     fallback="?"
                     radius='full'
                     referrerPolicy='no-referrer'
