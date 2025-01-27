@@ -4,7 +4,7 @@ import Link from "next/link";
 import {AiFillBug} from "react-icons/ai";
 import {usePathname} from "next/navigation";
 import classNames from "classnames";
-import {Box, Container, Flex} from "@radix-ui/themes";
+import {Avatar, Box, Button, Container, DropdownMenu, Flex, Text} from "@radix-ui/themes";
 import {useSession} from "next-auth/react";
 
 const links = [
@@ -20,10 +20,11 @@ const authLinks = [
 
 const Navbar = () => {
     const pathname = usePathname();
-    const {status} = useSession();
+    const {data, status} = useSession();
+    console.log(data?.user)
 
     return (
-        <nav className='border-b shadow mb-5 p-5'>
+        <nav className='border-b shadow mb-5 px-5 py-3'>
             <Container>
                 <Flex height='100%' justify='between' align='center'>
                     <Box>
@@ -49,7 +50,28 @@ const Navbar = () => {
                             }
                             {status === 'authenticated' &&
                                 <li className='text-zinc-500 hover:text-zinc-800 transition-colors duration-150'>
-                                    <Link href='/api/auth/signout'>Logout</Link>
+                                    <DropdownMenu.Root>
+                                        <DropdownMenu.Trigger>
+                                            <Avatar
+                                                className='border-gray-400 border-2'
+                                                role='button'
+                                                size="3"
+                                                src={data?.user?.image!}
+                                                fallback="A"
+                                                radius='full'
+                                            />
+                                        </DropdownMenu.Trigger>
+                                        <DropdownMenu.Content variant="soft">
+                                            <Flex direction='column' className='p-3'>
+                                                <Text>{data?.user?.name}</Text>
+                                                <Text size='1'>{data?.user?.email}</Text>
+                                            </Flex>
+                                            <DropdownMenu.Separator />
+                                            <DropdownMenu.Item color='red' role='button'>
+                                                <Link href='/api/auth/signout'>Logout</Link>
+                                            </DropdownMenu.Item>
+                                        </DropdownMenu.Content>
+                                    </DropdownMenu.Root>
                                 </li>
                             }
                         </ul>
