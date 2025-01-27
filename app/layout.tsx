@@ -1,13 +1,13 @@
 import {ReactNode} from "react";
 import type {Metadata} from "next";
 import {Open_Sans} from "next/font/google";
-import {Theme} from "@radix-ui/themes";
+import {Container, Theme} from "@radix-ui/themes";
 import Navbar from "@/app/Navbar";
-import "@radix-ui/themes/styles.css";
-import "./theme-config.css"
-import "./globals.css";
 import {ToastContainer} from "react-toastify";
 import AuthProvider from "@/app/auth/Provider";
+import "@radix-ui/themes/styles.css";
+import "./globals.css";
+import "./theme-config.css";
 
 const openSans = Open_Sans({
     subsets: ["latin"],
@@ -29,7 +29,11 @@ export default function RootLayout({children}: Readonly<{ children: ReactNode; }
             <ToastContainer theme='colored'/>
             <Theme accentColor="purple">
                 <Navbar/>
-                <main className='p-5'>{children}</main>
+                <main className='p-5'>
+                    <Container>
+                        {children}
+                    </Container>
+                </main>
             </Theme>
         </AuthProvider>
         </body>
