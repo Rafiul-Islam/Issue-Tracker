@@ -25,8 +25,8 @@ const IssueDeleteButton = ({issueId}: { issueId: string }) => {
                 toast.error(err.response.data.message);
             })
             .finally(() => {
-                setIsLoading(false)
-            })
+                setIsLoading(false);
+            });
     }
 
     return (
