@@ -1,11 +1,12 @@
 "use client";
 
-import {TrashIcon} from "@radix-ui/react-icons";
-import {AlertDialog, Button, Flex} from "@radix-ui/themes";
-import axios from "axios";
-import {toast} from "react-toastify";
-import {useRouter} from "next/navigation";
 import {useState} from "react";
+import {useRouter} from "next/navigation";
+import {toast} from "react-toastify";
+import axios from "axios";
+
+import {AlertDialog, Button, Flex} from "@radix-ui/themes";
+import {TrashIcon} from "@radix-ui/react-icons";
 import {Spinner} from "@/app/components";
 
 const IssueDeleteButton = ({issueId}: { issueId: string }) => {
