@@ -1,6 +1,9 @@
 import {Select} from "@radix-ui/themes";
+import {prisma} from "@/prisma/client";
 
-const AssigneeSelect = () => {
+const AssigneeSelect = async () => {
+    const users = await prisma.user.findMany({orderBy: {name: 'asc'}});
+
     return (
         <>
             <Select.Root>
@@ -8,7 +11,9 @@ const AssigneeSelect = () => {
                 <Select.Content>
                     <Select.Group>
                         <Select.Label>Suggestions</Select.Label>
-                        <Select.Item value="1">Rafiul Islam</Select.Item>
+                        {users.map(user => (
+                            <Select.Item key={user.id} value={user.id}>{user.name}</Select.Item>
+                        ))}
                     </Select.Group>
                 </Select.Content>
             </Select.Root>
