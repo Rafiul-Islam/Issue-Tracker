@@ -8,6 +8,7 @@ import AuthProvider from "@/app/auth/Provider";
 import "@radix-ui/themes/styles.css";
 import "./globals.css";
 import "./theme-config.css";
+import QueryClientProvider from "@/app/QueryClientProvider";
 
 const openSans = Open_Sans({
     subsets: ["latin"],
@@ -25,17 +26,19 @@ export default function RootLayout({children}: Readonly<{ children: ReactNode; }
     return (
         <html lang="en">
         <body className={openSans.variable}>
-        <AuthProvider>
-            <ToastContainer theme='colored'/>
-            <Theme accentColor="purple">
-                <Navbar/>
-                <main className='p-5'>
-                    <Container>
-                        {children}
-                    </Container>
-                </main>
-            </Theme>
-        </AuthProvider>
+        <QueryClientProvider>
+            <AuthProvider>
+                <ToastContainer theme='colored'/>
+                <Theme accentColor="purple">
+                    <Navbar/>
+                    <main className='p-5'>
+                        <Container>
+                            {children}
+                        </Container>
+                    </main>
+                </Theme>
+            </AuthProvider>
+        </QueryClientProvider>
         </body>
         </html>
     );
