@@ -1,6 +1,8 @@
 import {NextRequest, NextResponse} from "next/server";
 import {IssueSchema} from "@/app/validationSchema";
 import {prisma} from "@/prisma/client";
+import {getServerSession} from "next-auth";
+import authOptions from "@/app/api/auth/[...nextauth]/options";
 
 export const GET = async (req: NextRequest, {params}: { params: Promise<{ id: string }> }) => {
     const {id} = await params;
@@ -14,6 +16,15 @@ export const GET = async (req: NextRequest, {params}: { params: Promise<{ id: st
 }
 
 export const PATCH = async (req: NextRequest, {params}: { params: Promise<{ id: string }> }) => {
+    const session = await getServerSession(authOptions);
+    if (!session) {
+        return NextResponse.json({
+            success: false,
+            message: "Unauthorized",
+            payload: null
+        }, {status: 401});
+    }
+
     const {id} = await params;
     const body = await req.json();
     const validation = IssueSchema.partial().safeParse(body);
@@ -52,6 +63,15 @@ export const PATCH = async (req: NextRequest, {params}: { params: Promise<{ id: 
 }
 
 export const DELETE = async (req: NextRequest, {params}: { params: Promise<{ id: string }> }) => {
+    const session = await getServerSession(authOptions);
+    if (!session) {
+        return NextResponse.json({
+            success: false,
+            message: "Unauthorized",
+            payload: null
+        }, {status: 401});
+    }
+
     const {id} = await params;
     try {
         const issue = await prisma.issue.findUnique({where: {id: +id}});
