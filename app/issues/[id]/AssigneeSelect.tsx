@@ -5,6 +5,7 @@ import axios from "axios";
 import {useQuery} from "@tanstack/react-query";
 import {Skeleton} from "@/app/components";
 import {Select} from "@radix-ui/themes";
+import {toast} from "react-toastify";
 
 const AssigneeSelect = ({issue}: { issue: Issue }) => {
     const {data: users, error, isLoading} = useQuery<User[]>({
@@ -17,8 +18,10 @@ const AssigneeSelect = ({issue}: { issue: Issue }) => {
     const handleAssigneeChange = async (userId: string) => {
         try {
             await axios.patch(`/api/issues/${issue.id}`, {assignedToUserId: userId !== '-1' ? userId : null});
+            toast.success('Assignee updated successfully');
         } catch (err) {
             console.log(err);
+            toast.error('Failed to update assignee');
         }
     }
 
