@@ -1,5 +1,5 @@
 import {NextRequest, NextResponse} from "next/server";
-import {IssueSchema} from "@/app/validationSchema";
+import {IssueSchema, patchIssueSchema} from "@/app/validationSchema";
 import {prisma} from "@/prisma/client";
 import {getServerSession} from "next-auth";
 import authOptions from "@/app/api/auth/[...nextauth]/options";
@@ -9,25 +9,33 @@ export const GET = async (req: NextRequest, {params}: { params: Promise<{ id: st
     try {
         const issue = await prisma.issue.findUnique({where: {id: +id}});
         if (!issue) return NextResponse.json({success: false, message: "Issue not found"}, {status: 404});
-        return NextResponse.json({success: true, message: "Issue fetched successfully", payload: {issue}}, {status: 200});
+        return NextResponse.json({
+            success: true,
+            message: "Issue fetched successfully",
+            payload: {issue}
+        }, {status: 200});
     } catch (err) {
-        return NextResponse.json({success: false, message: "Something went wrong", payload: {error: err}}, {status: 500});
+        return NextResponse.json({
+            success: false,
+            message: "Something went wrong",
+            payload: {error: err}
+        }, {status: 500});
     }
 }
 
 export const PATCH = async (req: NextRequest, {params}: { params: Promise<{ id: string }> }) => {
-    const session = await getServerSession(authOptions);
-    if (!session) {
-        return NextResponse.json({
-            success: false,
-            message: "Unauthorized",
-            payload: null
-        }, {status: 401});
-    }
+    // const session = await getServerSession(authOptions);
+    // if (!session) {
+    //     return NextResponse.json({
+    //         success: false,
+    //         message: "Unauthorized",
+    //         payload: null
+    //     }, {status: 401});
+    // }
 
     const {id} = await params;
     const body = await req.json();
-    const validation = IssueSchema.partial().safeParse(body);
+    const validation = patchIssueSchema.partial().safeParse(body);
     if (!validation.success) {
         return NextResponse.json({
             success: false,
@@ -36,6 +44,17 @@ export const PATCH = async (req: NextRequest, {params}: { params: Promise<{ id: 
         }, {status: 400});
     } else {
         try {
+
+            const {title, description, status, assignedToUserId} = body;
+            if (assignedToUserId) {
+                const user = await prisma.user.findUnique({where: {id: assignedToUserId}});
+                if (!user) return NextResponse.json({
+                    success: false,
+                    message: "Invalid user ID",
+                    payload: null
+                }, {status: 404});
+            }
+
             const issue = await prisma.issue.findUnique({where: {id: +id}});
             if (!issue) return NextResponse.json({
                 success: false,
@@ -45,7 +64,7 @@ export const PATCH = async (req: NextRequest, {params}: { params: Promise<{ id: 
 
             const updatedIssue = await prisma.issue.update({
                 where: {id: +id},
-                data: body
+                data: {title, description, status, assignedToUserId}
             });
             return NextResponse.json({
                 success: true,
@@ -79,6 +98,10 @@ export const DELETE = async (req: NextRequest, {params}: { params: Promise<{ id:
         await prisma.issue.delete({where: {id: +id}})
         return NextResponse.json({success: true, message: "Issue deleted successfully"}, {status: 200})
     } catch (err) {
-        return NextResponse.json({success: false, message: "Something went wrong", payload: {error: err}}, {status: 500})
+        return NextResponse.json({
+            success: false,
+            message: "Something went wrong",
+            payload: {error: err}
+        }, {status: 500})
     }
 }
