@@ -8,12 +8,7 @@ import {Select} from "@radix-ui/themes";
 import {toast} from "react-toastify";
 
 const AssigneeSelect = ({issue}: { issue: Issue }) => {
-    const {data: users, error, isLoading} = useQuery<User[]>({
-        queryKey: ['users'],
-        queryFn: async () => await axios.get('/api/users').then(res => res.data.payload.users),
-        staleTime: 1000 * 60,
-        retry: 2,
-    });
+    const {data: users, error, isLoading} = useUsers();
 
     const handleAssigneeChange = async (userId: string) => {
         try {
@@ -44,5 +39,12 @@ const AssigneeSelect = ({issue}: { issue: Issue }) => {
         </>
     );
 };
+
+const useUsers = () => useQuery<User[]>({
+    queryKey: ['users'],
+    queryFn: async () => await axios.get('/api/users').then(res => res.data.payload.users),
+    staleTime: 1000 * 60 + 5,
+    retry: 2,
+});
 
 export default AssigneeSelect;
