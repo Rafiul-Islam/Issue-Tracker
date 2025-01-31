@@ -13,18 +13,27 @@ interface Props {
     }>;
 }
 
-const columns : {label: string, value: keyof Issue}[]= [
+const columns: { label: string, value: keyof Issue }[] = [
     {label: 'Title', value: 'title'},
     {label: 'Status', value: 'status'},
     {label: 'Created At', value: 'createdAt'},
 ]
 
-const IssuesPage = async ({searchParams}:Props) => {
+const IssuesPage = async ({searchParams}: Props) => {
     const {status, orderBy} = await searchParams;
     const statuses = Object.values(Status);
     const statusFilter = statuses.includes(status) ? {status} : {};
 
-    const issues = await prisma.issue.findMany({where: statusFilter});
+    const validOrderBy = columns.some(column => column.value === orderBy) ? orderBy : 'createdAt';
+
+    const issues = await prisma.issue.findMany(
+        {
+            where: statusFilter,
+            orderBy: {
+                [validOrderBy]: 'asc'
+            }
+        }
+    );
 
     return (
         <div>
@@ -74,6 +83,6 @@ const IssuesPage = async ({searchParams}:Props) => {
     );
 };
 
- export const dynamic = 'force-dynamic';
+export const dynamic = 'force-dynamic';
 
 export default IssuesPage;
