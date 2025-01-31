@@ -1,15 +1,26 @@
-import {Table} from "@radix-ui/themes";
+import {Flex, Table} from "@radix-ui/themes";
 import {prisma} from "@/prisma/client";
 import IssueActions from "@/app/issues/list/issueActions";
 import {IssueStatusBadge, Link} from "@/app/components";
-import {Status} from "@prisma/client";
+import NextLink from "next/link";
+import {Issue, Status} from "@prisma/client";
+import {ArrowUpIcon} from "@radix-ui/react-icons";
 
 interface Props {
-    searchParams: Promise<{status: Status}>;
+    searchParams: Promise<{
+        status: Status,
+        orderBy: keyof Issue
+    }>;
 }
 
+const columns : {label: string, value: keyof Issue}[]= [
+    {label: 'Title', value: 'title'},
+    {label: 'Status', value: 'status'},
+    {label: 'Created At', value: 'createdAt'},
+]
+
 const IssuesPage = async ({searchParams}:Props) => {
-    const {status} = await searchParams;
+    const {status, orderBy} = await searchParams;
     const statuses = Object.values(Status);
     const statusFilter = statuses.includes(status) ? {status} : {};
 
@@ -22,9 +33,19 @@ const IssuesPage = async ({searchParams}:Props) => {
                 <Table.Root variant="surface" className="mt-4 min-w-[700px]">
                     <Table.Header>
                         <Table.Row>
-                            <Table.ColumnHeaderCell>Title</Table.ColumnHeaderCell>
-                            <Table.ColumnHeaderCell>Status</Table.ColumnHeaderCell>
-                            <Table.ColumnHeaderCell>Created At</Table.ColumnHeaderCell>
+                            {columns.map((column) => (
+                                <Table.RowHeaderCell key={column.label}>
+                                    <Flex gap='1' align='center'>
+                                        <NextLink href={{
+                                            pathname: `/issues/list`,
+                                            query: {status, orderBy: column.value}
+                                        }}>
+                                            {column.label}
+                                        </NextLink>
+                                        {orderBy === column.value && <ArrowUpIcon/>}
+                                    </Flex>
+                                </Table.RowHeaderCell>
+                            ))}
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
