@@ -22,6 +22,8 @@ const IssueStatusFilter = () => {
             params.delete('status');
         } else {
             params.set('status', value);
+        } if (params.has('page')) {
+            params.set('page', '1');
         }
         const query = params.toString();
         router.push(`/issues/list?${query}`);
