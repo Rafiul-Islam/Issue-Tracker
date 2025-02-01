@@ -3,6 +3,7 @@ import IssueActions from "@/app/issues/list/issueActions";
 import {Status} from "@prisma/client";
 import Pagination from "@/app/components/Pagination";
 import IssueTable, {columnNames, IssueQuery} from "@/app/issues/list/IssueTable";
+import {Metadata} from "next";
 
 interface Props {
     searchParams: Promise<IssueQuery>;
@@ -44,4 +45,15 @@ const IssuesPage = async ({searchParams}: Props) => {
 
 export const dynamic = 'force-dynamic';
 
+
+export const metadata: Metadata = {
+    title: "Issue Tracker - Issue List",
+    description: "View all issues in the system.",
+};
+
 export default IssuesPage;
+
+
+
+
+
