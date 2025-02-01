@@ -12,7 +12,7 @@ const HomePage = async () => {
 
     return (
         <Grid columns={{initial: '1', md:'2'}} gap={'5'}>
-                <Flex gap='5' direction={'column'} align={'stretch'}>
+                <Flex gap='5' direction={'column'}>
                 <IssueSummary openIssues={openIssues} inProgressIssues={inProgressIssues} closedIssues={closedIssues}/>
                 <IssueChart openIssues={openIssues} inProgressIssues={inProgressIssues} closedIssues={closedIssues}/>
             </Flex>

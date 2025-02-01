@@ -2,6 +2,7 @@
 
 import React from 'react';
 import {Bar, BarChart, Cell, ResponsiveContainer, XAxis, YAxis} from "recharts";
+import {Card} from "@radix-ui/themes";
 
 interface Props {
     openIssues: number;
@@ -24,17 +25,19 @@ const IssueChart = ({openIssues, inProgressIssues, closedIssues}: Props) => {
 
     // @ts-ignore
     return (
-        <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={data}>
-                <XAxis dataKey="label" />
-                <YAxis />
-                <Bar dataKey="value" barSize={60} radius={[5, 5, 0, 0]}>
-                    {data.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={entry.fill} />
-                    ))}
-                </Bar>
-            </BarChart>
-        </ResponsiveContainer>
+        <Card className='p-5 shadow-md'>
+            <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={data}>
+                    <XAxis dataKey="label" />
+                    <YAxis />
+                    <Bar dataKey="value" barSize={60} radius={[5, 5, 0, 0]}>
+                        {data.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={entry.fill} />
+                        ))}
+                    </Bar>
+                </BarChart>
+            </ResponsiveContainer>
+        </Card>
     );
 };
 

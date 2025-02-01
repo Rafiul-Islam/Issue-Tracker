@@ -16,7 +16,7 @@ const LatestIssues = async () => {
     });
 
     return (
-        <Card className='p-0'>
+        <Card className='p-0 shadow-md'>
             <Heading size='4' m='5'>Latest Issues</Heading>
             <Table.Root className='px-5'>
                 <Table.Body>
