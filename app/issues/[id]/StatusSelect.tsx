@@ -3,7 +3,6 @@
 import React from 'react';
 import {Issue, Status} from "@prisma/client";
 import {Select} from '@radix-ui/themes';
-import {prisma} from "@/prisma/client";
 import {toast} from "react-toastify";
 import axios from "axios";
 
