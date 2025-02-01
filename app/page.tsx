@@ -1,6 +1,7 @@
 import LatestIssues from "@/app/_dashboard/LatestIssues";
 import IssueSummary from "@/app/_dashboard/issueSummary";
 import {prisma} from "@/prisma/client";
+import IssueChart from "@/app/_dashboard/IssueChart";
 
 const HomePage = async () => {
 
@@ -10,8 +11,7 @@ const HomePage = async () => {
 
     return (
         <div>
-            <IssueSummary openIssues={openIssues} inProgressIssues={inProgressIssues} closedIssues={closedIssues}/>
-            <LatestIssues/>
+            <IssueChart openIssues={openIssues} inProgressIssues={inProgressIssues} closedIssues={closedIssues}/>
         </div>
     );
 };
