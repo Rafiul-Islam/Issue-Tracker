@@ -1,6 +1,11 @@
+"use client";
+
 import React from 'react';
 import {Issue, Status} from "@prisma/client";
 import {Select} from '@radix-ui/themes';
+import {prisma} from "@/prisma/client";
+import {toast} from "react-toastify";
+import axios from "axios";
 
 interface Props {
     issue: Issue;
@@ -16,9 +21,22 @@ const StatusSelect = ({issue}: Props) => {
         {label: 'Closed', value: 'CLOSED'},
     ]
 
+    const handleStatusChange = async (value: Status) => {
+        if (value !== issue.status) {
+            axios.patch(`/api/issues/${issue.id}`, {status: value})
+                .then(() => {
+                    toast.success('Status updated successfully');
+                })
+                .catch(() => {
+                    toast.error('Something went wrong');
+                });
+
+        }
+    }
+
     return (
         <>
-            <Select.Root defaultValue={issue.status}>
+            <Select.Root defaultValue={issue.status} onValueChange={handleStatusChange}>
                 <Select.Trigger/>
                 <Select.Content>
                     <Select.Group>
