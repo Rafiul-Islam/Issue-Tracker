@@ -9,6 +9,7 @@ This is a simple issue tracker application built with Next.js and Prisma.
 * Assign issues to users
 * Filter issues by status
 * Paginate issues
+* Data validation using Zod and React Hook Form
 
 ## Screenshots
 
@@ -24,13 +25,21 @@ This is a simple issue tracker application built with Next.js and Prisma.
 * React Query (Data fetching and caching library)
 * Next-Auth (Authentication library)
 * Google OAuth (Authentication provider)
+* Zod (Validation library)
+* React Hook Form (Form library)
 
 ## Installation
 
 1. Clone the repository: `git clone https://github.com/omar-dulaimi/issue-tracker.git`
-2. Create the environment file by running `cp .env.example .env`
-3. Install dependencies: `yarn install`
-4. Run the development server: `yarn dev`
+2. Create the environment file by running `cp .env.example .env` and fill in the following values:
+	* `DATABASE_URL=""` - your database connection string
+	* `NEXTAUTH_URL="http://localhost:3000"` - the URL of your Next.js app
+	* `NEXTAUTH_SECRET=""` - a secret key for NextAuth
+	* `GOOGLE_CLIENT_ID=""` - your Google OAuth client ID
+	* `GOOGLE_CLIENT_SECRET=""` - your Google OAuth client secret
+3. Create the database schema by running `prisma migrate dev`
+4. Install dependencies: `yarn install`
+5. Run the development server: `yarn dev`
 
 ## License
 
