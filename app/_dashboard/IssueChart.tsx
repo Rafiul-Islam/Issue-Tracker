@@ -22,8 +22,6 @@ const IssueChart = ({openIssues, inProgressIssues, closedIssues}: Props) => {
         {label: 'Closed', value: closedIssues, fill: '#1abc9c'},
     ];
 
-
-    // @ts-ignore
     return (
         <Card className='p-5 shadow-md'>
             <ResponsiveContainer width="100%" height={300}>
